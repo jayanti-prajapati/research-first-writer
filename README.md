@@ -132,6 +132,9 @@ The bundled tools use only the Python standard library and work in CI.
 # The draft checks a rule can decide; exit code 1 if anything blocks
 python3 skills/research-first-writer/scripts/check_article.py examples/how-to-get-cited-by-ai-search/article.md
 
+# Outline checks before writing starts (section 3 of the checklists)
+python3 skills/research-first-writer/scripts/check_article.py --outline examples/how-to-get-cited-by-ai-search/07-outline.md
+
 # Transparent page scores from the signals you observed
 python3 skills/research-first-writer/scripts/score_pages.py examples/how-to-get-cited-by-ai-search/pages.json
 
@@ -142,7 +145,7 @@ python3 skills/research-first-writer/scripts/check_originality.py path/to/articl
 claude plugin eval .
 ```
 
-`check_article.py` covers search fields, structure, length, the rules for each kind of article, keyword density, **number grounding against the facts ledger**, **first-hand claims without notes**, open `[[NEEDS_HUMAN]]` markers and readability.
+`check_article.py` covers search fields, structure, length, the rules for each kind of article, keyword density, **number grounding against the facts ledger**, **first-hand claims without notes**, open `[[NEEDS_HUMAN]]` markers and readability (pass `--outline` to validate `07-outline.md`).
 `check_originality.py` reports the longest matching word run and the percentage of overlapping five-word phrase occurrences per source. It blocks runs of 14 words or more and phrase overlap above 20%, and warns from 10 words or 10% overlap. Credited quotes of 25 words or fewer and FAQ questions listed in the adjacent `07-outline.md` are excluded. Pass each source file as another argument; use `--outline <path>` if the outline is elsewhere, or `--json` for machine-readable output.
 
 The evaluation suite in [`evals/`](evals/) verifies that the skill triggers on plain requests, refuses invented testing claims, and catches weak drafts with positive performance deltas ($\Delta$).
